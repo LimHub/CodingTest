@@ -1,26 +1,39 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
-public class Main{
-    public static void main(String args[]){
-        Scanner scan = new Scanner(System.in);
-        int dataNum = scan.nextInt();
-        int questNum = scan.nextInt();
+public class Main {
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    StringTokenizer firstLine = new StringTokenizer(br.readLine());
+    int N = Integer.parseInt(firstLine.nextToken());
+    int M = Integer.parseInt(firstLine.nextToken());
 
-        int[] arr = new int[dataNum+1];
-        for(int i=1;i<=dataNum;i++){
-            arr[i] = scan.nextInt();
-        }
-        int[] arr1 = new int[dataNum+1];
-        arr1[0]= arr[0]=0;
-        for(int i =1 ; i<=dataNum;i++){
-            arr1[i]=arr[i]+arr1[i-1];
-        }
-       
-        for(int i=0;i<questNum;i++){
-            int firstNum = scan.nextInt();
-            int secondNum = scan.nextInt();
-            System.out.println(arr1[secondNum]-arr1[firstNum-1]);
-        }
-        scan.close();
+    StringTokenizer st = new StringTokenizer(br.readLine());
+    int[] arr = new int[N];
+    for (int i = 0; i < N; i++) {
+      arr[i] = Integer.parseInt(st.nextToken());
     }
+
+    long[] sumArr = new long[N];
+    sumArr[0] = arr[0];
+    for (int j = 1; j < N; j++) {
+      sumArr[j] = sumArr[j - 1] + arr[j];
+    }
+
+    StringBuilder output = new StringBuilder();
+    for (int q = 0; q < M; q++) {
+      StringTokenizer qs = new StringTokenizer(br.readLine());
+      int firstNum = Integer.parseInt(qs.nextToken());  
+      int secondNum = Integer.parseInt(qs.nextToken()); 
+
+      if (firstNum == 1) {
+        output.append(sumArr[secondNum - 1]).append('\n');
+      } else {
+        output.append(sumArr[secondNum - 1] - sumArr[firstNum - 2]).append('\n');
+      }
+    }
+
+    System.out.print(output.toString());
+    br.close();
+  }
 }
