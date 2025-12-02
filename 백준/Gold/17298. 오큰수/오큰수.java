@@ -2,32 +2,31 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-  public static void main(String args[]) throws IOException{
-      
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      int N = Integer.parseInt(br.readLine());
-      int[] A = new int[N];
-      int[] answer = new int[N];
-      String []str = br.readLine().split(" ");
-      for(int i = 0 ; i < N ; i++){
-        A[i] = Integer.parseInt(str[i]);
-      }
-      Stack<Integer> stack = new Stack();
-      stack.push(0);
-      for(int i = 0 ;i< N;i++){
-        while(!stack.isEmpty() && A[stack.peek()] < A[i]){
-          answer[stack.pop()] = A[i];
-        }
-        stack.push(i);
-      }
-      while(!stack.isEmpty()){
-        answer[stack.pop()] = -1;
-      }
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-      for(int i = 0 ; i< N ; i++){
-        bw.write(answer[i]+ " ");
-      }
-      bw.write("\n");
-      bw.flush();
+  public static void main(String args[])throws IOException{
+    //N을 입력받고 배열에 담기
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int N = Integer.parseInt(br.readLine());
+    int[] arr = new int[N];
+    int[] answer = new int[N];
+    Stack<Integer> stack = new Stack<>();
+    StringTokenizer st = new StringTokenizer(br.readLine());
+    for(int i = 0 ; i < N ; i++){
+      arr[i] = Integer.parseInt(st.nextToken());
     }
+    for(int i = 0 ; i < N ; i++){
+      while(!stack.isEmpty() && arr[stack.peek()] < arr[i]){
+        answer[stack.pop()] = arr[i];
+      }
+      stack.push(i);
+    }
+    while(!stack.isEmpty()){
+      answer[stack.pop()] = -1;
+    }
+    StringBuilder sb = new StringBuilder();
+    for(int num : answer){
+      sb.append(num).append(" ");
+    }
+    System.out.println(sb);
+  }
+
 }
